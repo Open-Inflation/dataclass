@@ -13,6 +13,7 @@ class AdministrativeUnit:
     settlement_type: Literal["village", "city"]
 
     name: str
+    alias: str
     country: Literal["BLR", "RUS", "USA", "ARE"]
     region: str
 
