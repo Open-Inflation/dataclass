@@ -46,7 +46,7 @@ class Card:
     """Бренд товара"""
     producer_name: str
     """Название производителя"""
-    producer_country: Literal["BLR", "RUS", "USA", "ARE"]
+    producer_country: Literal["BLR", "RUS", "USA", "ARE", "CHN"]
     """Страна-производитель"""
 
     composition: str
@@ -100,7 +100,7 @@ class Card:
 
     unit: Literal["PCE", "KGM", "LTR"]
     """Единицы измерения товара по стандарту UNECE Rec 20"""
-    available_count: float | int
+    available_count: float | int | None
     """Доступное кол-во товара в магазине (для PCE допускается лишь int)"""
     package_quantity: float | None
     """Объем/вес товара в упаковке"""
@@ -114,5 +114,3 @@ class Card:
     """Главное изображение товара"""
     images: list[BytesIO]
     """Остальные изображения товара (без главного)"""
-
-# TODO brand class
