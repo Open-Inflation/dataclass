@@ -1,4 +1,4 @@
-"""Pydantic-модели для категорий, товаров и географии ретейла."""
+"""Pydantic models for products, categories, and retail geolocation."""
 
 __version__ = "0.1.0"
 

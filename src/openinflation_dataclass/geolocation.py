@@ -13,11 +13,11 @@ from .types import NetworkModel
 def _validate_hhmm(value: str, field_name: str) -> None:
     if re.fullmatch(r"(?:[01]\d|2[0-3]):[0-5]\d", value):
         return
-    raise ValueError(f"{field_name} должно быть во времени формата HH:MM, получено: {value!r}")
+    raise ValueError(f"{field_name} must match HH:MM format, got: {value!r}")
 
 
 class Schedule(NetworkModel):
-    """Время открытия/закрытия в формате HH:MM."""
+    """Opening/closing time in HH:MM format."""
 
     open_from: str
     closed_from: str
@@ -31,7 +31,7 @@ class Schedule(NetworkModel):
 
 
 class AdministrativeUnit(NetworkModel):
-    """Административная единица, в рамках которой расположен объект."""
+    """Administrative unit where the retail entity is located."""
 
     settlement_type: Literal["village", "city"]
     name: str
@@ -43,7 +43,7 @@ class AdministrativeUnit(NetworkModel):
 
 
 class RetailUnit(NetworkModel):
-    """Торговая точка: магазин, ПВЗ или склад."""
+    """Retail entity: store, pickup point, or warehouse."""
 
     retail_type: Literal["pickup_point", "store", "warehouse"]
     code: str

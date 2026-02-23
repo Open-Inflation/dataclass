@@ -17,9 +17,9 @@ def _bytesio_from_network(value: Any) -> BytesIO:
         try:
             raw = base64.b64decode(value.encode("ascii"), validate=True)
         except (ValueError, UnicodeEncodeError, binascii.Error) as exc:
-            raise ValueError("Некорректная base64-строка для BytesIO.") from exc
+            raise ValueError("Invalid base64 string for BytesIO.") from exc
         return BytesIO(raw)
-    raise TypeError(f"Ожидался BytesIO/base64-строка/bytes, получено: {type(value)!r}")
+    raise TypeError(f"Expected BytesIO/base64 string/bytes, got: {type(value)!r}")
 
 
 def _bytesio_to_network(value: BytesIO) -> str:
@@ -34,7 +34,7 @@ Base64BytesIO = Annotated[
 
 
 class NetworkModel(BaseModel):
-    """Базовая pydantic-модель для сетевых сущностей."""
+    """Base pydantic model for network-facing entities."""
 
     model_config = ConfigDict(
         extra="forbid",

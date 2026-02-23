@@ -9,13 +9,13 @@ T = TypeVar("T")
 
 
 def to_json(value: Any, *, ensure_ascii: bool = False) -> str:
-    """Сериализует pydantic-модели/структуры в JSON-строку для передачи по сети."""
+    """Serialize pydantic models/structures to a JSON string."""
     normalized = TypeAdapter(Any).dump_python(value, mode="json")
     return json.dumps(normalized, ensure_ascii=ensure_ascii, separators=(",", ":"))
 
 
 def from_json(payload: str | bytes | bytearray, model: type[T] | Any) -> T:
-    """Десериализует JSON-строку в указанный pydantic-тип."""
+    """Deserialize a JSON payload into a target pydantic type."""
     if isinstance(payload, (bytes, bytearray)):
         payload = payload.decode("utf-8")
     raw = json.loads(payload)

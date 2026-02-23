@@ -8,14 +8,14 @@ from .types import Base64BytesIO, NetworkModel
 
 
 class WholesalePrice(NetworkModel):
-    """Цена за единицу при оптовом пороге."""
+    """Wholesale unit price threshold."""
 
     from_items: int | float
     price: float
 
 
 class MetaData(NetworkModel):
-    """Дополнительные метаданные товара."""
+    """Additional product metadata."""
 
     name: str
     alias: str
@@ -23,7 +23,7 @@ class MetaData(NetworkModel):
 
 
 class Card(NetworkModel):
-    """Карточка товара из источника."""
+    """Product card model from a source catalog."""
 
     sku: str
     plu: str | None
@@ -57,14 +57,14 @@ class Card(NetworkModel):
     wholesale_price: list[WholesalePrice]
     price_unit: Literal["BYN", "RUB", "USD", "EUR", "AED"]
 
-    # Гайд на единицы:
-    # Шоколад 200г:
+    # Unit guide:
+    # Chocolate 200 g:
     #   unit="PCE", available_count=15, package_quantity=0.2, package_unit="KGM"
-    # Молоко 1л:
+    # Milk 1 L:
     #   unit="PCE", available_count=10, package_quantity=1, package_unit="LTR"
-    # Картошка на развес:
+    # Potatoes by weight:
     #   unit="KGM", available_count=12.7, package_quantity=None, package_unit=None
-    # Водомат:
+    # Water vending:
     #   unit="LTR", available_count=29.2, package_quantity=0.5, package_unit="LTR"
     unit: Literal["PCE", "KGM", "LTR"]
     available_count: int | float | None
@@ -78,8 +78,14 @@ class Card(NetworkModel):
 
     @model_validator(mode="after")
     def validate_business_rules(self) -> Card:
-        if self.unit == "PCE" and self.available_count is not None and type(self.available_count) is not int:
-            raise ValueError("Для unit='PCE' поле available_count должно быть int.")
+        is_piece_unit = self.unit == "PCE"
+        has_count = self.available_count is not None
+        count_is_int = type(self.available_count) is int
+
+        if is_piece_unit and has_count and not count_is_int:
+            raise ValueError("For unit='PCE', available_count must be int.")
         if (self.package_quantity is None) != (self.package_unit is None):
-            raise ValueError("package_quantity и package_unit должны быть заполнены вместе или оба быть None.")
+            raise ValueError(
+                "package_quantity and package_unit must be set together or both set to None."
+            )
         return self

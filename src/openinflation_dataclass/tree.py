@@ -6,7 +6,7 @@ from .types import Base64BytesIO, NetworkModel
 
 
 class Category(NetworkModel):
-    """Категория товаров с иерархией вложенности."""
+    """Product category with nested children."""
 
     uid: str
     alias: str
