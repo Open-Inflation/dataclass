@@ -1,7 +1,5 @@
 from __future__ import annotations
 
-from io import BytesIO
-
 import pytest
 from pydantic import ValidationError
 
@@ -47,8 +45,8 @@ def _build_card() -> Card:
         package_quantity=1.0,
         package_unit="LTR",
         categories_uid=["milk"],
-        main_image=BytesIO(b"main-image"),
-        images=[BytesIO(b"image-1"), BytesIO(b"image-2")],
+        main_image="main-image.png",
+        images=["image-1.png", "image-2.png"],
     )
 
 
@@ -58,7 +56,7 @@ def _build_retail_unit() -> RetailUnit:
         alias="milk",
         title="Milk",
         adult=False,
-        icon=BytesIO(b"icon"),
+        icon="icon.png",
     )
     admin = AdministrativeUnit(
         settlement_type="city",
@@ -92,9 +90,9 @@ def test_round_trip_retail_unit_json() -> None:
 
     assert isinstance(restored, RetailUnit)
     assert restored.products[0].sku == "SKU-001"
-    assert restored.products[0].main_image.getvalue() == b"main-image"
+    assert restored.products[0].main_image == "main-image.png"
     assert restored.categories[0].icon is not None
-    assert restored.categories[0].icon.getvalue() == b"icon"
+    assert restored.categories[0].icon == "icon.png"
 
 
 def test_round_trip_list_of_cards_json() -> None:
@@ -103,7 +101,7 @@ def test_round_trip_list_of_cards_json() -> None:
 
     assert isinstance(restored, list)
     assert isinstance(restored[0], Card)
-    assert restored[0].images[1].getvalue() == b"image-2"
+    assert restored[0].images[1] == "image-2.png"
 
 
 def test_card_piece_validation_rejects_float_count() -> None:
@@ -138,7 +136,7 @@ def test_card_piece_validation_rejects_float_count() -> None:
             package_quantity=1.0,
             package_unit="LTR",
             categories_uid=["milk"],
-            main_image=BytesIO(b"main-image"),
+            main_image="main-image.png",
         )
 
 
