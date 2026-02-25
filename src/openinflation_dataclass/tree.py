@@ -2,7 +2,7 @@ from __future__ import annotations
 
 from pydantic import Field
 
-from .types import Base64BytesIO, NetworkModel
+from .types import NetworkModel
 
 
 class Category(NetworkModel):
@@ -13,8 +13,8 @@ class Category(NetworkModel):
     title: str
     adult: bool
 
-    icon: Base64BytesIO | None = Field(default=None, repr=False)
-    banner: Base64BytesIO | None = Field(default=None, repr=False)
+    icon: str | None = Field(default=None, repr=False)
+    banner: str | None = Field(default=None, repr=False)
     children: list[Category] = Field(default_factory=list)
 
 

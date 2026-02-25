@@ -4,7 +4,7 @@ from typing import Literal
 
 from pydantic import Field, model_validator
 
-from .types import Base64BytesIO, NetworkModel
+from .types import NetworkModel
 
 
 class WholesalePrice(NetworkModel):
@@ -73,8 +73,8 @@ class Card(NetworkModel):
 
     categories_uid: list[str]
 
-    main_image: Base64BytesIO = Field(repr=False)
-    images: list[Base64BytesIO] = Field(default_factory=list, repr=False)
+    main_image: str = Field(repr=False)
+    images: list[str] = Field(default_factory=list, repr=False)
 
     @model_validator(mode="after")
     def validate_business_rules(self) -> Card:
