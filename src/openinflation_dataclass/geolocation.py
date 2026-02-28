@@ -19,12 +19,14 @@ def _validate_hhmm(value: str, field_name: str) -> None:
 class Schedule(NetworkModel):
     """Opening/closing time in HH:MM format."""
 
-    open_from: str
-    closed_from: str
+    open_from: str | None = None
+    closed_from: str | None = None
 
     @field_validator("open_from", "closed_from")
     @classmethod
-    def validate_hhmm(cls, value: str, info: object) -> str:
+    def validate_hhmm(cls, value: str | None, info: object) -> str | None:
+        if value is None:
+            return value
         field_name = getattr(info, "field_name", "time")
         _validate_hhmm(value, field_name)
         return value
@@ -33,27 +35,27 @@ class Schedule(NetworkModel):
 class AdministrativeUnit(NetworkModel):
     """Administrative unit where the retail entity is located."""
 
-    settlement_type: Literal["village", "city"]
-    name: str
-    alias: str
-    country: Literal["BLR", "RUS", "USA", "ARE"]
-    region: str
-    longitude: float
-    latitude: float
+    settlement_type: Literal["village", "city"] | None = None
+    name: str | None = None
+    alias: str | None = None
+    country: Literal["BLR", "RUS", "USA", "ARE"] | None = None
+    region: str | None = None
+    longitude: float | None = None
+    latitude: float | None = None
 
 
 class RetailUnit(NetworkModel):
     """Retail entity: store, pickup point, or warehouse."""
 
-    retail_type: Literal["pickup_point", "store", "warehouse"]
-    code: str
-    address: str
-    schedule_weekdays: Schedule
-    schedule_saturday: Schedule
-    schedule_sunday: Schedule
-    temporarily_closed: bool
-    longitude: float
-    latitude: float
-    administrative_unit: AdministrativeUnit
-    categories: list[Category] = Field(default_factory=list)
-    products: list[Card] = Field(default_factory=list)
+    retail_type: Literal["pickup_point", "store", "warehouse"] | None = None
+    code: str | None = None
+    address: str | None = None
+    schedule_weekdays: Schedule | None = None
+    schedule_saturday: Schedule | None = None
+    schedule_sunday: Schedule | None = None
+    temporarily_closed: bool | None = None
+    longitude: float | None = None
+    latitude: float | None = None
+    administrative_unit: AdministrativeUnit | None = None
+    categories: list[Category] | None = Field(default_factory=list)
+    products: list[Card] | None = Field(default_factory=list)

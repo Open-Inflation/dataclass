@@ -10,52 +10,52 @@ from .types import NetworkModel
 class WholesalePrice(NetworkModel):
     """Wholesale unit price threshold."""
 
-    from_items: int | float
-    price: float
+    from_items: int | float | None = None
+    price: float | None = None
 
 
 class MetaData(NetworkModel):
     """Additional product metadata."""
 
-    name: str
-    alias: str
-    value: float | int | str
+    name: str | None = None
+    alias: str | None = None
+    value: float | int | str | None = None
 
 
 class Card(NetworkModel):
     """Product card model from a source catalog."""
 
-    sku: str
-    plu: str | None
-    source_page_url: str
+    sku: str | None = None
+    plu: str | None = None
+    source_page_url: str | None = None
 
-    title: str
-    description: str
+    title: str | None = None
+    description: str | None = None
 
-    adult: bool
-    new: bool
-    promo: bool
-    season: bool
-    hit: bool
-    data_matrix: bool
+    adult: bool | None = None
+    new: bool | None = None
+    promo: bool | None = None
+    season: bool | None = None
+    hit: bool | None = None
+    data_matrix: bool | None = None
 
-    brand: str
-    producer_name: str
-    producer_country: Literal["BLR", "RUS", "USA", "ARE", "CHN"]
+    brand: str | None = None
+    producer_name: str | None = None
+    producer_country: Literal["BLR", "RUS", "USA", "ARE", "CHN"] | None = None
 
-    composition: str
-    meta_data: list[MetaData]
+    composition: str | None = None
+    meta_data: list[MetaData] | None = Field(default_factory=list)
 
-    expiration_date_in_days: int
+    expiration_date_in_days: int | None = None
 
-    rating: float
-    reviews_count: int
+    rating: float | None = None
+    reviews_count: int | None = None
 
-    price: float
-    discount_price: float | None
-    loyal_price: float | None
-    wholesale_price: list[WholesalePrice]
-    price_unit: Literal["BYN", "RUB", "USD", "EUR", "AED"]
+    price: float | None = None
+    discount_price: float | None = None
+    loyal_price: float | None = None
+    wholesale_price: list[WholesalePrice] | None = Field(default_factory=list)
+    price_unit: Literal["BYN", "RUB", "USD", "EUR", "AED"] | None = None
 
     # Unit guide:
     # Chocolate 200 g:
@@ -66,15 +66,15 @@ class Card(NetworkModel):
     #   unit="KGM", available_count=12.7, package_quantity=None, package_unit=None
     # Water vending:
     #   unit="LTR", available_count=29.2, package_quantity=0.5, package_unit="LTR"
-    unit: Literal["PCE", "KGM", "LTR"]
-    available_count: int | float | None
-    package_quantity: float | None
-    package_unit: Literal["KGM", "LTR"] | None
+    unit: Literal["PCE", "KGM", "LTR"] | None = None
+    available_count: int | float | None = None
+    package_quantity: float | None = None
+    package_unit: Literal["KGM", "LTR"] | None = None
 
-    categories_uid: list[str]
+    categories_uid: list[str] | None = Field(default_factory=list)
 
-    main_image: str = Field(repr=False)
-    images: list[str] = Field(default_factory=list, repr=False)
+    main_image: str | None = Field(default=None, repr=False)
+    images: list[str] | None = Field(default_factory=list, repr=False)
 
     @model_validator(mode="after")
     def validate_business_rules(self) -> Card:
