@@ -68,9 +68,13 @@ class Card(NetworkModel):
     #   unit="LTR", available_count=29.2, package_quantity=0.5, package_unit="LTR"
     unit: Literal["PCE", "KGM", "LTR"] | None = None
     available_count: int | float | None = None
-    package_quantity: float | None = None
+    package_quantity_net: float | None = None
+    """Кол-во в нетто"""
+    package_quantity_gross: float | None = None
+    """Кол-во в брутто"""
     package_unit: Literal["KGM", "LTR"] | None = None
 
+    # All in meters
     dimension_height: float | None = None
     dimension_width: float | None = None
     dimension_depth: float | None = None
@@ -88,8 +92,12 @@ class Card(NetworkModel):
 
         if is_piece_unit and has_count and not count_is_int:
             raise ValueError("For unit='PCE', available_count must be int.")
-        if (self.package_quantity is None) != (self.package_unit is None):
+        if (self.package_quantity_net is None) != (self.package_unit is None):
             raise ValueError(
-                "package_quantity and package_unit must be set together or both set to None."
+                "package_quantity_net and package_unit must be set together or both set to None."
+            )
+        if (self.package_quantity_gross is None) != (self.package_unit is None):
+            raise ValueError(
+                "package_quantity_gross and package_unit must be set together or both set to None."
             )
         return self

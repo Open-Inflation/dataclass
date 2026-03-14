@@ -1,6 +1,6 @@
 """Pydantic models for products, categories, and retail geolocation."""
 
-__version__ = "0.1.3"
+__version__ = "0.1.4"
 
 from .card import Card, MetaData, WholesalePrice
 from .geolocation import AdministrativeUnit, RetailUnit, Schedule
