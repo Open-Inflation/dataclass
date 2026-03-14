@@ -71,6 +71,10 @@ class Card(NetworkModel):
     package_quantity: float | None = None
     package_unit: Literal["KGM", "LTR"] | None = None
 
+    dimension_height: float | None = None
+    dimension_width: float | None = None
+    dimension_depth: float | None = None
+
     categories_uid: list[str] | None = Field(default_factory=list)
 
     main_image: str | None = Field(default=None, repr=False)
