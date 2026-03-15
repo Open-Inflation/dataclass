@@ -66,13 +66,15 @@ class Card(NetworkModel):
     #   unit="KGM", available_count=12.7, package_quantity=None, package_unit=None
     # Water vending:
     #   unit="LTR", available_count=29.2, package_quantity=0.5, package_unit="LTR"
-    unit: Literal["PCE", "KGM", "LTR"] | None = None
+    unit_net: Literal["PCE", "KGM", "LTR"] | None = None
     available_count: int | float | None = None
     package_quantity_net: float | None = None
-    """Кол-во в нетто"""
-    package_quantity_gross: float | None = None
-    """Кол-во в брутто"""
+    """Кол-во в нетто (зависит от unit)"""
+    package_weight_gross: float | None = None
+    """Вес в брутто (т.к. брутто измеряется в логистике только в нем)"""
     package_unit: Literal["KGM", "LTR"] | None = None
+    package_count: float | None = None
+    """Кол-во единиц товара в упаковке"""
 
     # All in meters
     dimension_height: float | None = None
