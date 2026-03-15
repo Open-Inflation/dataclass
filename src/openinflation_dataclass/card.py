@@ -69,12 +69,12 @@ class Card(NetworkModel):
     unit_net: Literal["PCE", "KGM", "LTR"] | None = None
     available_count: int | float | None = None
     package_quantity_net: float | None = None
-    """Кол-во в нетто (зависит от unit)"""
+    """Net quantity (depends on unit)"""
     package_weight_gross: float | None = None
-    """Вес в брутто (т.к. брутто измеряется в логистике только в нем)"""
+    """Gross weight (because gross is measured in logistics only in it)"""
     package_unit: Literal["KGM", "LTR"] | None = None
     package_count: float | None = None
-    """Кол-во единиц товара в упаковке"""
+    """Number of product units per package"""
 
     # All in meters
     dimension_height: float | None = None
