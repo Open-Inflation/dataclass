@@ -54,6 +54,9 @@ class RetailUnit(NetworkModel):
     schedule_saturday: Schedule | None = None
     schedule_sunday: Schedule | None = None
     temporarily_closed: bool | None = None
+    rating: float | None = None
+    reviews_count: int | None = None
+    open_date: str | None = None
     longitude: float | None = None
     latitude: float | None = None
     administrative_unit: AdministrativeUnit | None = None
