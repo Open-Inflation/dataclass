@@ -88,7 +88,7 @@ class Card(NetworkModel):
 
     @model_validator(mode="after")
     def validate_business_rules(self) -> Card:
-        is_piece_unit = self.unit == "PCE"
+        is_piece_unit = self.unit_net == "PCE"
         has_count = self.available_count is not None
         count_is_int = type(self.available_count) is int
 
@@ -98,8 +98,8 @@ class Card(NetworkModel):
             raise ValueError(
                 "package_quantity_net and package_unit must be set together or both set to None."
             )
-        if (self.package_quantity_gross is None) != (self.package_unit is None):
+        if (self.package_weight_gross is None) != (self.package_unit is None):
             raise ValueError(
-                "package_quantity_gross and package_unit must be set together or both set to None."
+                "package_weight_gross and package_unit must be set together or both set to None."
             )
         return self
